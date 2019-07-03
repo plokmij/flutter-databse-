@@ -15,7 +15,7 @@ class DataProvider implements Source {
 
   void init() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, "data.db");
+    final path = join(documentsDirectory.path, "newdata.db");
     db = await openDatabase(
       path,
       version: 1,
@@ -24,7 +24,7 @@ class DataProvider implements Source {
           CREATE TABLE Accounts(
             id INTEGER PRIMARY KEY,
             name TEXT,
-            job TEXT,
+            job TEXT
           )
         """);
       },
@@ -32,22 +32,44 @@ class DataProvider implements Source {
   }
 
   @override
-  Future<List<String>> fetchAllNames() async{
+  Future<List<String>> fetchAllNames() async {
     // TODO: implement fetchAllNames
     final maps = await db.query(
       "Accounts",
       columns: ["name"],
     );
 
-    if(maps.length > 0){
+    if (maps.length > 0) {
       print(maps.first);
     }
     return null;
   }
 
   @override
-  Future<Model> fetchIndividualDetail(int id) {
+  Future<Model> fetchIndividualDetail(int id) async {
     // TODO: implement fetchIndividualDetail
+    final maps = await db.query(
+      "Accounts",
+      columns: null,
+      where: "id = ?",
+      whereArgs: [id],
+    );
+
+    if (maps.length > 0) {
+      return Model.fromDb(maps.first);
+    }
     return null;
   }
+
+  @override
+  Future<int> addData(Model model) {
+    // TODO: implement addData
+    return db.insert(
+      "Accounts",
+      model.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.ignore,
+    );
+  }
 }
+
+final dataProvider = DataProvider();
