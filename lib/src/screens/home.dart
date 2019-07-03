@@ -30,7 +30,7 @@ class Home extends StatelessWidget {
             Spacer(),
             InkWell(
               onTap: () {
-                print("Tapped");
+                _showDialog(context);
               },
               child: Material(
                 //elevation: -40.0,
@@ -94,5 +94,39 @@ class Home extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Enter Details"),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 2.4,
+              child: Column(
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(hintText: "Hello"),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(hintText: "Hello"),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(hintText: "Hello"),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("ADD"),
+                onPressed: () {
+                  print("Add this data to db ");
+                },
+              )
+            ],
+          );
+        });
   }
 }
