@@ -24,6 +24,75 @@ class Home extends StatelessWidget {
         },
         backgroundColor: Color(0xff2F7367),
       ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Spacer(),
+            InkWell(
+              onTap: () {
+                print("Tapped");
+              },
+              child: Material(
+                //elevation: -40.0,
+                child: Container(
+                  padding: EdgeInsets.all(45),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(9),
+                    ),
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.yellow,
+                        Colors.green,
+                      ],
+                    ),
+                  ),
+                  child: Text(
+                    "Add Data",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Spacer(),
+            InkWell(
+              onTap: () {
+                print("Tapped");
+              },
+              child: Material(
+                //elevation: 40.0,
+                child: Container(
+                  padding: EdgeInsets.all(45),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(9),
+                    ),
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.yellow,
+                        Colors.red,
+                      ],
+                    ),
+                  ),
+                  child: Text(
+                    "ListData",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Spacer(),
+          ],
+        ),
+      ),
     );
   }
 }
