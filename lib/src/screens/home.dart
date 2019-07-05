@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../resources/data_provider.dart';
 import '../models/model.dart';
+import 'data_list.dart';
 
 class Home extends StatelessWidget {
   final TextEditingController _id = TextEditingController();
@@ -65,7 +66,12 @@ class Home extends StatelessWidget {
             Spacer(),
             InkWell(
               onTap: () {
-                print("Tapped");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DataList(), 
+                  ),
+                );
               },
               child: Material(
                 //elevation: 40.0,
@@ -143,14 +149,15 @@ class Home extends StatelessWidget {
                   print("Job = " + _job.text);
                   print("Name = " + _name.text);
 
-                  Map<String, dynamic> toAdd = {
+                  Map<String, dynamic> toAddReal = {
                     "id": int.parse(_id.text),
                     "job": _job.text,
                     "name": _name.text
                   };
-                  Model sherikkumAdd = Model.fromMap(toAdd);
+                  Model sherikkumAdd = Model.fromMap(toAddReal);
                   int x = await dataProvider.addData(sherikkumAdd);
-                  Model fromDb = await dataProvider.fetchIndividualDetail(toAdd["id"]);
+                  Model fromDb =
+                      await dataProvider.fetchIndividualDetail(toAddReal["id"]);
                   print("${fromDb.name}");
                   Navigator.pop(context);
                 },

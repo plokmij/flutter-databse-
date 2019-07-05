@@ -39,10 +39,15 @@ class DataProvider implements Source {
       columns: ["name"],
     );
 
+    List<String> names = [];
+
     if (maps.length > 0) {
-      print(maps.first);
+      for (int i = 0; i < maps.length; i++) {
+        names.add(maps[i]["name"]);
+      }
     }
-    return null;
+    print(names);
+    return names;
   }
 
   @override
