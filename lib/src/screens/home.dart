@@ -3,6 +3,10 @@ import '../resources/data_provider.dart';
 import '../models/model.dart';
 
 class Home extends StatelessWidget {
+  final TextEditingController _id = TextEditingController();
+  final TextEditingController _job = TextEditingController();
+  final TextEditingController _name = TextEditingController();
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -107,13 +111,25 @@ class Home extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   TextField(
-                    decoration: InputDecoration(hintText: "Hello"),
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: "id",
+                    ),
+                    controller: _id,
                   ),
                   TextField(
-                    decoration: InputDecoration(hintText: "Hello"),
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: "Name",
+                    ),
+                    controller: _name,
                   ),
                   TextField(
-                    decoration: InputDecoration(hintText: "Hello"),
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: "Job",
+                    ),
+                    controller: _job,
                   ),
                 ],
               ),
@@ -121,8 +137,22 @@ class Home extends StatelessWidget {
             actions: <Widget>[
               FlatButton(
                 child: Text("ADD"),
-                onPressed: () {
-                  print("Add this data to db ");
+                onPressed: () async {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  print("ID = " + _id.text);
+                  print("Job = " + _job.text);
+                  print("Name = " + _name.text);
+
+                  Map<String, dynamic> toAdd = {
+                    "id": int.parse(_id.text),
+                    "job": _job.text,
+                    "name": _name.text
+                  };
+                  Model sherikkumAdd = Model.fromMap(toAdd);
+                  int x = await dataProvider.addData(sherikkumAdd);
+                  Model fromDb = await dataProvider.fetchIndividualDetail(toAdd["id"]);
+                  print("${fromDb.name}");
+                  Navigator.pop(context);
                 },
               )
             ],
